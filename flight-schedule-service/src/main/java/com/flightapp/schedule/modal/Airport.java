@@ -1,6 +1,8 @@
 package com.flightapp.schedule.modal;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = { "CR_AT", "UP_AT" }, allowGetters = true)
-public class Airport {
+public class Airport implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -42,7 +45,7 @@ public class Airport {
 	@Column(name = "AP_code", unique = true)
 	private String code;
 	
-	@OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "address_ID" , nullable=false) 
 	private Address address; 
 
@@ -61,7 +64,10 @@ public class Airport {
 	@Column(columnDefinition="tinyint(1) default 1")
 	private boolean active;
 	
-
+	/*
+	 * @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL ) private
+	 * List<Flight> flights;
+	 */
 	public Airport() {
 		super();
 	}
@@ -122,5 +128,11 @@ public class Airport {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	/*
+	 * public List<Flight> getFlights() { return flights; }
+	 * 
+	 * public void setFlights(List<Flight> flights) { this.flights = flights; }
+	 */
 
 }

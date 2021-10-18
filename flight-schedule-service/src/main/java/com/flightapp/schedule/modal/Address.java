@@ -46,13 +46,13 @@ public class Address implements Serializable {
 	@Size(max = 50)
 	private String city;
 	
-	@Size(max = 255)
+	
 	private String addLine1;
 	
-	@Size(max = 255)
+	
 	private String addLine2;
 	
-	@Size(max = 255)
+	
 	private String addLine3;
 	
 	@Min(6)

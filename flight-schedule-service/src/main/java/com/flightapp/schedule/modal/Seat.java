@@ -18,16 +18,33 @@ public class Seat implements Serializable{
 	private int totalSeat;
 	private String bookingClass;
 	
-	@ManyToOne
-	private FlightSchedule flightSchedule;
 	
 	public Seat() {
 		super();
+	}	
+
+	public Seat(long id, int totalSeat, String bookingClass) {
+		super();
+		this.id = id;
+		this.totalSeat = totalSeat;
+		this.bookingClass = bookingClass;
 	}
 
-	public Seat(int totalSeat, String bookingClass) {
-		super();
+
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public void setTotalSeat(int totalSeat) {
 		this.totalSeat = totalSeat;
+	}
+
+	public void setBookingClass(String bookingClass) {
 		this.bookingClass = bookingClass;
 	}
 
@@ -37,6 +54,11 @@ public class Seat implements Serializable{
 
 	public String getBookingClass() {
 		return bookingClass;
+	}
+
+	@Override
+	public String toString() {
+		return "Seat [id=" + id + ", totalSeat=" + totalSeat + ", bookingClass=" + bookingClass + "]";
 	}
 	
 

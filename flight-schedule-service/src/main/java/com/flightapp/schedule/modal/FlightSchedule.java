@@ -1,5 +1,6 @@
 package com.flightapp.schedule.modal;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -34,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = { "CR_AT", "UP_AT" }, allowGetters = true)
-public class FlightSchedule {
+public class FlightSchedule implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,8 +67,8 @@ public class FlightSchedule {
 	 * @OneToMany private Set<String> flightDays;
 	 */
 	
-	@OneToMany
-	private Map<String,Fares> fares;	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Fares> fares;	
 	
 	private String mealType;
 	
@@ -139,11 +140,13 @@ public class FlightSchedule {
 		this.flightStatus = flightStatus;
 	}
 
-	public Map<String, Fares> getFares() {
+	
+
+	public Set<Fares> getFares() {
 		return fares;
 	}
 
-	public void setFares(Map<String, Fares> fares) {
+	public void setFares(Set<Fares> fares) {
 		this.fares = fares;
 	}
 

@@ -1,14 +1,19 @@
 package com.flightapp.schedule.modal;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Generated;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
@@ -27,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = { "CR_AT", "UP_AT" }, allowGetters = true)
 public class Airline {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY , generator = "airline")
 	private Long id;
 	
 	@NotBlank
@@ -56,6 +61,11 @@ public class Airline {
 	@LastModifiedDate
 	private Date modifiedDate;
 	
+	/*
+	 * @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	 * 
+	 * @JoinColumn(name="Airline_ID") private List<Flight> flights;
+	 */
 	
 	public Airline() {
 		super();
@@ -142,5 +152,11 @@ public class Airline {
 	}
 
 
+	/*
+	 * public List<Flight> getFlights() { return flights; }
+	 * 
+	 * 
+	 * public void setFlights(List<Flight> flights) { this.flights = flights; }
+	 */
 	
 }
