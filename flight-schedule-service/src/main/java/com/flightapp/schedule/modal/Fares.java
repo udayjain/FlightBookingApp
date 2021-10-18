@@ -1,33 +1,44 @@
 package com.flightapp.schedule.modal;
 
+import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Fares {
+public class Fares implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private long id;	
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY )
 	private FlightSchedule flightSchedule;
-	
-	private String fare;
+	 	
+	private Double fare;
 	private String currency;
-
-	public Fares(String fare, String currency) {
-
-		this.fare = fare;
-		this.currency = currency;
-	}
-
+	private String fareClass;
+	
+	
 	public Fares() {
 		super();
 	}
+
+	
+	public Fares(long id, Double fare, String currency, String fareClass) {
+		super();
+		this.id = id;
+		this.fare = fare;
+		this.currency = currency;
+		this.fareClass = fareClass;
+	}
+
 
 	public long getId() {
 		return id;
@@ -37,11 +48,11 @@ public class Fares {
 		this.id = id;
 	}
 
-	public String getFare() {
+	public Double getFare() {
 		return fare;
 	}
 
-	public void setFare(String fare) {
+	public void setFare(Double fare) {
 		this.fare = fare;
 	}
 
@@ -53,9 +64,28 @@ public class Fares {
 		this.currency = currency;
 	}
 
+	public FlightSchedule getFlightSchedule() {
+		return flightSchedule;
+	}
+
+	public void setFlightSchedule(FlightSchedule flightSchedule) {
+		this.flightSchedule = flightSchedule;
+	}
+
+	public String getFareClass() {
+		return fareClass;
+	}
+
+	public void setFareClass(String fareClass) {
+		this.fareClass = fareClass;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Fares [id=" + id + ", fare=" + fare + ", currency=" + currency + "]";
+		return "Fares [id=" + id + ", flightSchedule=" + flightSchedule + ", fare=" + fare + ", currency=" + currency
+				+ ", fareClass=" + fareClass + "]";
 	}
+
 
 }

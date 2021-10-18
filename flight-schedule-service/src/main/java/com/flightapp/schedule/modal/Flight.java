@@ -1,5 +1,6 @@
 package com.flightapp.schedule.modal;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -27,13 +29,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"CR_AT", "UP_AT"}, 
-allowGetters = true)
-public class Flight {
+@JsonIgnoreProperties(value = {"CR_AT", "UP_AT"}, allowGetters = true)
+public class Flight implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,11 +45,15 @@ public class Flight {
 	@JsonFormat(pattern = "HH:MM")
 	private String duration;
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	private Airport  srcAiport;
+	@OneToOne(fetch = FetchType.EAGER )
+	@JsonProperty("srcAirport")
+	@JoinColumn(name = "SRC_Airport_ID" )
+	private Airport  srcAirport;
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	private Airport destAiport;
+	@OneToOne(fetch =FetchType.EAGER )
+	@JsonProperty("destAirport")
+	@JoinColumn(name = "Dest_Airport_ID")
+	private Airport destAirport;
 
 	@OneToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
 	private Set<Seat> seats;
@@ -93,26 +98,24 @@ public class Flight {
 	public void setDuration(String duration) {
 		this.duration = duration;
 	}
-
-
 	
 	public Airport getSrcAiport() {
-		return srcAiport;
+		return srcAirport;
 	}
 
 
-	public void setSrcAiport(Airport srcAiport) {
-		this.srcAiport = srcAiport;
+	public void setSrcAiport(Airport srcAirport) {
+		this.srcAirport = srcAirport;
 	}
 
 
 	public Airport getDestAiport() {
-		return destAiport;
+		return destAirport;
 	}
 
 
-	public void setDestAiport(Airport destAiport) {
-		this.destAiport = destAiport;
+	public void setDestAiport(Airport destAirport) {
+		this.destAirport = destAirport;
 	}
 
 
