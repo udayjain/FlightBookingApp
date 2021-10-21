@@ -1,0 +1,4 @@
+2021-10-19 07:26:36.569  INFO 6908 --- [RMI TCP Connection(1480)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2021-10-19 07:26:36.608  INFO 6908 --- [RMI TCP Connection(1480)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-10-19 07:26:36.614  INFO 6908 --- [RMI TCP Connection(1480)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2021-10-19 07:26:36.618  INFO 6908 --- [RMI TCP Connection(1480)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

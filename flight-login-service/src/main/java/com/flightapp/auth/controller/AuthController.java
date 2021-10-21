@@ -41,7 +41,7 @@ import com.flightapp.auth.security.services.UserDetailsImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v.1/auth")
+@RequestMapping("/api/v1.0/auth")
 public class AuthController {
 	private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
 	
@@ -74,7 +74,7 @@ public class AuthController {
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-		LOG.info("User sign in Successfully" + userDetails.getId());
+		LOG.info("User sign in Successfully!" + userDetails.getDisplayName());
 		
 		
 		return ResponseEntity.ok(new JwtResponse (jwt, 
@@ -84,7 +84,8 @@ public class AuthController {
 												 roles));
 		
 	}
-
+	
+	
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
 
@@ -103,13 +104,13 @@ public class AuthController {
 		user.setDob(signUpRequest.getDob());
 		user.setGender(signUpRequest.getGender());
 		user.setMobNO(signUpRequest.getMobNo());
-		user.setActive(true);
+		
 		LOG.info("User sign up Process in progress");
 		Set<Role> roles = new HashSet<>();
 	
 		LOG.info("User sign up role save");
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is found."));
+					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			roles.add(userRole);	
 		
 
@@ -122,7 +123,7 @@ public class AuthController {
 	}
 	
 	@GetMapping("/admin")
-	public List<User> retriveallUsers() {
+	public List<User> retriveAllUsers() {
 		return userRepository.findAll();
 	}
 }

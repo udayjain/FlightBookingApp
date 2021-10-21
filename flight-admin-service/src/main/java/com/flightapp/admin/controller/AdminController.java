@@ -48,9 +48,14 @@ public class AdminController {
 	@Autowired
 	private ScheduleService scheduleService;
 	
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	
 	///POST /api/v1.0/flight/admin/login Admin login
 	@PostMapping("/login")
-	public ResponseEntity<?> signIn(@RequestBody LoginRequest loginrequest) {
+	public ResponseEntity<?> signIn(@RequestBody LoginRequest loginrequest) {		
+		
 		boolean isAdmin = loginrequest.getUserName().equalsIgnoreCase("Admin") 
 				&& loginrequest.getPassword().equalsIgnoreCase("AdminAdmin");
 		
@@ -115,10 +120,35 @@ public class AdminController {
 	
 	//POST /api/v1.0/flight/airline/inventory/add Add Inventory/Schedule of an existing Airline
 	
-	@PostMapping("/schedule")
+	@PostMapping("/schedule/add")
 	public ResponseEntity<?> scheduleFlight(@Valid @RequestBody FlightSchedule flightSchedule){			
 		
 		return scheduleService.addFlightOnSchedule(flightSchedule);
+	}
+	//POST /api/v1.0/flight/airline/inventory/add Add Inventory/Schedule of an existing Airline
+	@PutMapping("/schedule/{id}")
+	public ResponseEntity<?> rescheduleFlight(@Valid @RequestBody FlightSchedule flightSchedule, @PathVariable Long id){			
+		
+		return scheduleService.reschdeuleFlightOnSchedule(flightSchedule,id);
+	}
+	
+	//POST /api/v1.0/flight/airline/inventory/remove Add Inventory/Schedule of an existing Airline
+	@DeleteMapping("/schedule/{id}")
+	public ResponseEntity<?> removeScheduleFlight(@PathVariable Long id){			
+		
+		return scheduleService.removeFlightOnSchedule(id);
+	}
+	
+	@GetMapping("/schedule")
+	public ResponseEntity<?> retriveAllScheduleFlight(){			
+		
+		return scheduleService.getAllFlightOnSchedule();
+	}
+	
+	@GetMapping("/schedule/{id}")
+	public ResponseEntity<?> retriveScheduleFlight(@PathVariable Long id){			
+		
+		return scheduleService.getFlightOnSchedule(id);
 	}
 		
 }

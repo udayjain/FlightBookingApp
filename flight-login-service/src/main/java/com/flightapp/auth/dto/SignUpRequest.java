@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 public class SignUpRequest {
  
     @NotEmpty
@@ -35,11 +34,17 @@ public class SignUpRequest {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date dob;
     
-    @Size(min = 6, message = "{Size.userDto.password}")
+    @Size(min = 6)
     private String password;
     
     @NotEmpty
     private String gender;
+
+    
+    
+	public SignUpRequest() {
+		super();
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -95,6 +100,12 @@ public class SignUpRequest {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	@Override
+	public String toString() {
+		return "SignUpRequest [firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId + ", mobNo="
+				+ mobNo + ", dob=" + dob + ", password=" + password + ", gender=" + gender + "]";
 	}
     
     
